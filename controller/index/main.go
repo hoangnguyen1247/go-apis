@@ -17,7 +17,7 @@ func New() (*IndexController, error) {
 func (handler *IndexController) SetRoutes(e *gin.Engine) {
 	g := e.Group("/")
 	{
-		g.GET("/:params", handler.GetIndex)
+		g.GET("/", handler.GetIndex)
 	}
 }
 

@@ -1,4 +1,4 @@
-package go_apis
+package main
 
 import (
 	"context"
@@ -21,7 +21,7 @@ import (
 func main() {
 	fmt.Println("Starting server.....")
 
-	port := flag.String("port", "8080", "http serve port, default:8080")
+	port := flag.String("port", "8083", "http serve port, default:8083")
 	templatesPath := flag.String("template", "./template", "path of the template files")
 	flag.Parse()
 
@@ -42,8 +42,8 @@ func main() {
 	r.LoadHTMLGlob(*templatesPath + "/**/*")
 
 	// handle 404
-	r.NoRoute(func(c *gin.Context) {
-		c.HTML(http.StatusNotFound, "util/error_page.template", gin.H{
+	r.NoRoute(func(ginContext *gin.Context) {
+        ginContext.HTML(http.StatusNotFound, "error/404.tmpl", gin.H{
 			"error_code": 404,
 			"retry_link": "/",
 		})
