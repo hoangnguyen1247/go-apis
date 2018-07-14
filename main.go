@@ -10,12 +10,14 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/hoangnguyen1247/go-apis/controller/index"
+	"github.com/hoangnguyen1247/go-apis/controller/home"
 
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+    "go-apis/controller/home"
 )
 
 func main() {
@@ -49,11 +51,18 @@ func main() {
 		})
 	})
 
-	// setup routes for macrokiosk
+	// index route
 	indexController, err := index.New()
 	if err == nil {
-		indexController.SetRoutes(r)
+		indexController.BindGin(r)
 		//defer indexController.close()
+	}
+
+	// index route
+	homeController, err := home.New()
+	if err == nil {
+        homeController.BindGin(r)
+		//defer homeController.close()
 	}
 
 	// make grateful shutdown
