@@ -26,8 +26,11 @@
 [[projects]]
   branch = "master"
   name = "github.com/hoangnguyen1247/go-apis"
-  packages = ["controller/index"]
-  revision = "6beda5de83f3d99a9bb09c2f0a6dabe626dee042"
+  packages = [
+    "controller/home",
+    "controller/index"
+  ]
+  revision = "f71405c8f557ed6fa0f3b4672874e6a80c42dca2"
 
 [[projects]]
   name = "github.com/itsjamie/gin-cors"
@@ -83,6 +86,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9f8b031676843299f2315806f2dde73c6ea807d128530667946680c898c1f5e4"
+  inputs-digest = "3f0edbb668f9110fff6adb937ec09ff4706837372b01c6ee65a8f574ca5b146e"
   solver-name = "gps-cdcl"
   solver-version = 1
