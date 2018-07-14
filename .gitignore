@@ -3,3 +3,6 @@
 # IDEs and editors
 /.idea
 /.vscode
+
+# dependencies
+/vendor
