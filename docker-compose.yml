@@ -1,0 +1,42 @@
+version: "3.3"
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: goapis_db
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3383:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: goapis
+      MYSQL_DATABASE: goapis
+      MYSQL_USER: goapis
+      MYSQL_PASSWORD: goapis
+    networks:
+      - goapis
+  be:
+    depends_on:
+      - db
+    container_name: goapis_be
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8083:8083
+    restart: always
+    environment:
+      GO_DB_HOST: db
+      GO_DB_PORT: 3306
+      GO_DB_NAME: goapis
+      GO_DB_USER: goapis
+      GO_DB_PASSWORD: goapis
+    networks:
+      - goapis
+
+volumes:
+  db_data:
+
+networks:
+  goapis:

@@ -23,7 +23,7 @@ func (handler *Controller) BindGin(e *gin.Engine) {
 }
 
 func (handler *Controller) GetHome(ginContext *gin.Context) {
-    ginContext.HTML(http.StatusOK, "home/get-hello.tmpl", gin.H{})
+    ginContext.HTML(http.StatusOK, "home/get-home.tmpl", gin.H{})
 }
 
 func (handler *Controller) GetHomeHello(ginContext *gin.Context) {
