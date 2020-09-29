@@ -5,12 +5,13 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
-	"github.com/itsjamie/gin-cors"
+	cors "github.com/itsjamie/gin-cors"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/hoangnguyen1247/go-apis/controller/index"
 	"github.com/hoangnguyen1247/go-apis/controller/home"
+	"github.com/hoangnguyen1247/go-apis/controller/index"
 
 	"net/http"
 	"os"
@@ -40,11 +41,12 @@ func main() {
 		ValidateHeaders: false,
 	}))
 
+	r.Use(static.Serve("/", static.LocalFile("./tmp", false)))
 	r.LoadHTMLGlob(*templatesPath + "/**/*")
 
 	// handle 404
 	r.NoRoute(func(ginContext *gin.Context) {
-        ginContext.HTML(http.StatusNotFound, "error/404.tmpl", gin.H{
+		ginContext.HTML(http.StatusNotFound, "error/404.tmpl", gin.H{
 			"error_code": 404,
 			"retry_link": "/",
 		})
@@ -60,7 +62,7 @@ func main() {
 	// index route
 	homeController, err := home.New()
 	if err == nil {
-        homeController.BindGin(r)
+		homeController.BindGin(r)
 		//defer homeController.close()
 	}
 
@@ -83,7 +85,7 @@ func main() {
 	<-quit
 	log.Println("Shutdown Server ...")
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatal("Server Shutdown:", err)
